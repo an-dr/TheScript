@@ -9,13 +9,16 @@ class X:
     """
     from os.path import realpath, basename, dirname, join
     from os.path import join as joinpath
-    from os import system as x, environ as env
+    from os import system as x
+    from os import environ as env
+    from os import chdir, getcwd
     from psutil import MACOS, WINDOWS, LINUX
     from subprocess import Popen as shell
     from sys import stdout
 
-    def __init__(self, cmd, script_name):
+    def __init__(self, cmd, script_name="Sctipt", cwd="."):
         self.cmd,  self.__script_dir, self.__script_name = self.__cfg(cmd)
+        self.cwd = X.realpath(cwd)
         #
         self.__add_name_window_cmd(script_name)
         self.__add_cd_to_start_dir()
@@ -42,7 +45,8 @@ class X:
         self.cmd.insert(0, CH_WIN_NAME)  # add window rename cmd
 
     def __add_cd_to_start_dir(self):
-        self.cmd.insert(0, "cd " + self.__script_dir)  # add window rename cmd
+        X.chdir(self.cwd)
+        self.cmd.insert(0, "cd " + X.realpath(self.cwd))  # add window rename cmd
 
     def __press_enter(self):
         input("%s is finished. Press Enter to close..." % self.__script_name)
@@ -53,8 +57,9 @@ class X:
         elif X.MACOS or X.LINUX:
             SHELL, NEXT_CMDCMD = "sh", ";"
         #
+        print("INFO: Current Workin DIrectory is " + self.cwd)
         X.shell([SHELL, NEXT_CMD.join(self.cmd)],
-                stdout=X.stdout).communicate()
+                stdout=X.stdout, cwd=self.cwd).communicate()
 
 
 if __name__ == "__main__":
