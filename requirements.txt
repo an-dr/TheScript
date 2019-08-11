@@ -1,0 +1,5 @@
+environs
+psutil
+pywin32
+copyhere@ git+git://github.com/dongrama/copyhere.git
+fillvars@ git+git://github.com/dongrama/fillvars.git
