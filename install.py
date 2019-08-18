@@ -7,7 +7,7 @@ import sys
 from info import info
 
 python = sys.executable
-install_cmd = "-m pip install -e"
+install_cmd = "setup.py install"
 uninstall_cmd = "-m pip uninstall -y"
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
